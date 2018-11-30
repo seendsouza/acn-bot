@@ -1,3 +1,4 @@
 /src/config.json
 /src/configdev.json
+/src/discord.log
 *.pyc
