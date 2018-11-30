@@ -4,9 +4,10 @@ A bot for the Asian Creative Network.
 
 import asyncio
 import json
+import time
+import logging
 
 import discord
-
 
 # configuring the bot using config.json
 with open('config.json') as f:
@@ -17,11 +18,12 @@ command_prefix = data["prefix"]
 
 client = discord.Client()
 
-check_if_delete_msg(message):
-	if message.contains(".role "):
-		return True
-	else:
-		return False
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+
 
 @client.event
 async def on_ready():
@@ -30,11 +32,20 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+
 @client.event
 async def on_message(message):
     """
     When a user in the server sends a message, this checks if a command is sent to the bot.
     If it is for the bot, this will execute the command.
     """
-    purge_from(channel, check_if_delete_msg, limit=100, check=None, before=None, after=None, around=None) 
+    if message.content.startswith(".role "):
+        time.sleep(5)
+        await client.delete_message(message)
+    if message.content.startswith("wtf? role not found, spel teh name beter or something."):
+        time.sleep(5)
+        await client.delete_message(message)
+    if message.content.startswith("access granted to role "):
+        time.sleep(5)
+        await client.delete_message(message)
 client.run(token)
