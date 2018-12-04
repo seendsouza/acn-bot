@@ -45,10 +45,10 @@ async def on_message(message):
         if message.content.startswith(delete_me):
             time.sleep(5)
             await client.delete_message(message)
-    
     if message.content.startswith(command_prefix + 'clear'):
         tmp = await client.send_message(message.channel, 'Clearing messages...')
         async for msg in client.logs_from(message.channel):
+            print(msg.content)
             for delete_me in delete_these_strings:
                 if msg.content.startswith(delete_me):
                     await client.delete_message(msg)
