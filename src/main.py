@@ -9,6 +9,8 @@ import logging
 
 import discord
 
+delete_these_strings = [".role ", "wtf? role not found, spel teh name beter or something.", "access granted to role "]
+
 # configuring the bot using config.json
 with open('config.json') as f:
     data = json.load(f)
@@ -39,13 +41,15 @@ async def on_message(message):
     When a user in the server sends a message, this checks if a command is sent to the bot.
     If it is for the bot, this will execute the command.
     """
-    if message.content.startswith(".role "):
-        time.sleep(5)
-        await client.delete_message(message)
-    if message.content.startswith("wtf? role not found, spel teh name beter or something."):
-        time.sleep(5)
-        await client.delete_message(message)
-    if message.content.startswith("access granted to role "):
-        time.sleep(5)
-        await client.delete_message(message)
+    for delete_me in delete_these_strings:
+        if message.content.startswith(delete_me):
+            time.sleep(5)
+            await client.delete_message(message)
+    
+    if message.content.startswith(command_prefix + 'clear'):
+        tmp = await client.send_message(message.channel, 'Clearing messages...')
+        async for msg in client.logs_from(message.channel):
+            for delete_me in delete_these_strings:
+                if msg.content.startswith(delete_me):
+                    await client.delete_message(msg)
 client.run(token)
