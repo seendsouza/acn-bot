@@ -9,7 +9,8 @@ import logging
 
 import discord
 
-delete_these_strings = [".role ", "wtf? role not found, spel teh name beter or something.", "access granted to role "]
+
+delete_these_strings = [".role ", "wtf? role not found, spel teh name beter or something.", "access granted to role ","!clear", "Clearing messages...", ".help", "homepage"]
 
 # configuring the bot using config.json
 with open('config.json') as f:
@@ -46,10 +47,10 @@ async def on_message(message):
             time.sleep(5)
             await client.delete_message(message)
     if message.content.startswith(command_prefix + 'clear'):
-        tmp = await client.send_message(message.channel, 'Clearing messages...')
-        async for msg in client.logs_from(message.channel):
-            print(msg.content)
+        async for msg in client.logs_from(message.channel,100):
             for delete_me in delete_these_strings:
                 if msg.content.startswith(delete_me):
                     await client.delete_message(msg)
+
+
 client.run(token)
