@@ -2,15 +2,11 @@
 A bot for the Asian Creative Network.
 """
 
-import asyncio
 import json
 import time
 import logging
 
 import discord
-
-
-delete_these_strings = [".role ", "wtf? role not found, spel teh name beter or something.", "access granted to role ","!clear", "Clearing messages...", ".help", "homepage"]
 
 # configuring the bot using config.json
 with open('config.json') as f:
@@ -19,12 +15,19 @@ with open('config.json') as f:
 token = data["token"]
 command_prefix = data["prefix"]
 
+delete_these_strings = [".role ",
+                        "wtf? role not found, spel teh name beter or something.",
+                        "access granted to role ", command_prefix + "clear",
+                        "Clearing messages...", ".help", "homepage"]
+
 client = discord.Client()
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(
+    filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter(
+    '%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
 
@@ -39,7 +42,8 @@ async def on_ready():
 @client.event
 async def on_message(message):
     """
-    When a user in the server sends a message, this checks if a command is sent to the bot.
+    When a user in the server sends a message, this checks
+    if a command is sent to the bot.
     If it is for the bot, this will execute the command.
     """
     for delete_me in delete_these_strings:
@@ -47,7 +51,7 @@ async def on_message(message):
             time.sleep(5)
             await client.delete_message(message)
     if message.content.startswith(command_prefix + 'clear'):
-        async for msg in client.logs_from(message.channel,100):
+        async for msg in client.logs_from(message.channel, 100):
             for delete_me in delete_these_strings:
                 if msg.content.startswith(delete_me):
                     await client.delete_message(msg)
