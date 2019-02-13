@@ -19,7 +19,7 @@ delete_these_strings = [".role ",
                         "wtf? role not found, spel teh name beter or something.",
                         "access granted to role ", command_prefix + "clear",
                         "Clearing messages...", ".help", "homepage", ".derole ",
-                        "seriously? you already have the ", "access removed from role",
+                        "seriously? you already have the", "access removed from role",
                         "invalid command, clearly someone is unable to read the docs"]
 
 client = discord.Client()
