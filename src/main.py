@@ -20,8 +20,8 @@ delete_these_strings = [".role ",
                         "access granted to role ", command_prefix + "clear",
                         "Clearing messages...", ".help", "homepage", ".derole ",
                         "seriously? you already have the", "access removed from role",
-                        "invalid command, clearly someone is unable to read the docs"]
-
+                        "invalid command, clearly someone is unable to read the docs",
+                        "ah there buttmunch tryin' to cheat the system? you don't have"]
 client = discord.Client()
 
 logger = logging.getLogger('discord')
