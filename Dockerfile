@@ -1,7 +1,9 @@
-FROM python:3.6
+FROM python:3-slim-buster
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
 WORKDIR /app
-CMD cd /app
-COPY ./ /app
-CMD cd ./src
-RUN pip3 install discord.py --user
+COPY src .
+
 CMD ["python", "main.py"]
