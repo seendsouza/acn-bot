@@ -8,12 +8,17 @@ import logging
 
 import discord
 
-# configuring the bot using config.json
-with open('config.json') as f:
-    data = json.load(f)
+env = os.getenv("ACN_ENV")
+if env == "production":
+    token = os.getenv('ACN_TOKEN')
+    command_prefix = os.getenv('ACN_COMMAND_PREFIX')
+else:
+    # configuring the bot using config.json
+    with open('config.json') as f:
+        data = json.load(f)
 
-token = data["token"]
-command_prefix = data["prefix"]
+    token = data["token"]
+    command_prefix = data["prefix"]
 
 delete_these_strings = [".role ",
                         "wtf? role not found, spel teh name beter or something.",
@@ -24,13 +29,14 @@ delete_these_strings = [".role ",
                         "ah there buttmunch tryin' to cheat the system? you don't have"]
 client = discord.Client()
 
-logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(
-    filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter(
-    '%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+if env != "production":
+    logger = logging.getLogger('discord')
+    logger.setLevel(logging.DEBUG)
+    handler = logging.FileHandler(
+        filename='discord.log', encoding='utf-8', mode='w')
+    handler.setFormatter(logging.Formatter(
+        '%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+    logger.addHandler(handler)
 
 
 @client.event
