@@ -5,6 +5,7 @@ A bot for the Asian Creative Network.
 import json
 import time
 import logging
+import os
 
 import discord
 
