@@ -15,7 +15,7 @@ if env == "production":
     command_prefix = os.getenv('ACN_COMMAND_PREFIX')
 else:
     # configuring the bot using config.json
-    with open('config.json') as f:
+    with open('configdev.json') as f:
         data = json.load(f)
 
     token = data["token"]
@@ -57,13 +57,16 @@ async def on_message(message):
     """
     for delete_me in delete_these_strings:
         if message.content.startswith(delete_me):
-            time.sleep(5)
-            await client.delete_message(message)
+            time.sleep(10)
+            await message.delete()
+
+    current_channel = message.channel
+
     if message.content.startswith(command_prefix + 'clear'):
-        async for msg in client.logs_from(message.channel, 100):
+        async for msg in current_channel.history(limit=200):
             for delete_me in delete_these_strings:
                 if msg.content.startswith(delete_me):
-                    await client.delete_message(msg)
+                    await msg.delete()
 
 
 client.run(token)
