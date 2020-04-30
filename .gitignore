@@ -2,4 +2,6 @@
 /src/configdev.json
 /src/discord.log
 /src/helper_scripts/scripts.log
+/kube/config.yaml
+ACN_COMMIT
 *.pyc

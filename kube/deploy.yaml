@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acn-bot-deploy
+  namespace: acn-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acn-bot-app
+  template:
+    metadata:
+      labels:
+        app: acn-bot-app
+    spec:
+      containers:
+        - image: seendsouza/acn-bot:sha-0c87c7f
+          name: acn-bot-container
+          imagePullPolicy: Always
+
+          envFrom:
+            - configMapRef:
+                name: acn-bot-configs
