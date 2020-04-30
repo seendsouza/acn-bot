@@ -30,9 +30,9 @@ delete_these_strings = [".role ",
                         "ah there buttmunch tryin' to cheat the system? you don't have"]
 client = discord.Client()
 
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
 if env != "production":
-    logger = logging.getLogger('discord')
-    logger.setLevel(logging.DEBUG)
     handler = logging.FileHandler(
         filename='discord.log', encoding='utf-8', mode='w')
     handler.setFormatter(logging.Formatter(
